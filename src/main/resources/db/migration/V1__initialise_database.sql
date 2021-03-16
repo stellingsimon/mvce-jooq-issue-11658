@@ -1,10 +1,7 @@
-DROP SCHEMA IF EXISTS mcve CASCADE;
-
-CREATE SCHEMA mcve;
-
-CREATE TABLE mcve.test (
-  id    INT NOT NULL AUTO_INCREMENT,
-  value INT,
-  
-  CONSTRAINT pk_test PRIMARY KEY (id) 
+DROP SCHEMA IF EXISTS "MCVE" CASCADE;
+CREATE SCHEMA "MCVE";
+CREATE TABLE "MCVE"."TEST"
+(
+    "ID"    INT PRIMARY KEY,
+    "VALUE" char(2)[] check (array_to_string("VALUE", ',', '*') != 'A ' )
 );

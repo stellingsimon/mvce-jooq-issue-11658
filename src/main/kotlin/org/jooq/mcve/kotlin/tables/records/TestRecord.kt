@@ -39,7 +39,7 @@ open class TestRecord() : UpdatableRecordImpl<TestRecord>(Test.TEST), Record2<In
     override fun fieldsRow(): Row2<Int?, Array<String?>> = super.fieldsRow() as Row2<Int?, Array<String?>>
     override fun valuesRow(): Row2<Int?, Array<String?>> = super.valuesRow() as Row2<Int?, Array<String?>>
     override fun field1(): Field<Int?> = Test.TEST.ID
-    override fun field2(): Field<Array<String?>> = Test.TEST.VALUE
+    override fun field2(): Field<Array<String?>?> = Test.TEST.VALUE
     override fun component1(): Int? = id
     override fun component2(): Array<String?>? = value
     override fun value1(): Int? = id
@@ -64,7 +64,7 @@ open class TestRecord() : UpdatableRecordImpl<TestRecord>(Test.TEST), Record2<In
     /**
      * Create a detached, initialised TestRecord
      */
-    constructor(id: Int? = null, value: Int? = null): this() {
+    constructor(id: Int? = null, value: Array<String?>? = null): this() {
         this.id = id
         this.value = value
     }

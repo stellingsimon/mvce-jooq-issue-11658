@@ -1,22 +1,31 @@
 package org.jooq.mcve.test.kotlin
 
-import org.jooq.mcve.java.Tables.TEST
+import org.jooq.conf.StatementType
+import org.jooq.mcve.kotlin.tables.Test.Companion.TEST
 import org.jooq.mcve.test.java.AbstractTest
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class KotlinTest : AbstractTest() {
 
     @Test
-    fun mcveTest() {
-        val result = ctx
-                .insertInto(TEST)
-                .columns(TEST.VALUE)
-                .values(42)
-                .returning(TEST.ID)
-                .fetchOne()
+    fun mcveTestWorking() {
+        ctx.settings().withStatementType(StatementType.STATIC_STATEMENT)
+        ctx.truncate(TEST).execute()
+        ctx
+            .insertInto(TEST)
+            .columns(TEST.ID, TEST.VALUE)
+            .values(1, arrayOf("AB")) // stored as "AB", as expected.
+            .execute()
+    }
 
-        result?.refresh()
-        assertEquals(42, result?.value)
+    @Test
+    fun mcveTestFailing() {
+        ctx.settings().withStatementType(StatementType.PREPARED_STATEMENT)
+        ctx.truncate(TEST).execute()
+        ctx
+                .insertInto(TEST)
+                .columns(TEST.ID, TEST.VALUE)
+                .values(2, arrayOf("AB")) // stored as "A "!
+                .execute()
     }
 }
