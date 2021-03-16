@@ -67,7 +67,7 @@ open class Test(
     /**
      * The column <code>MCVE.TEST.VALUE</code>.
      */
-    val VALUE: TableField<TestRecord, Int?> = createField(DSL.name("VALUE"), SQLDataType.INTEGER, this, "")
+    val VALUE: TableField<TestRecord, Array<String?>?> = createField(DSL.name("VALUE"), SQLDataType.CHAR.arrayDataType, this, "")
 
     private constructor(alias: Name, aliased: Table<TestRecord>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<TestRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
